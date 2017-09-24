@@ -22,6 +22,8 @@ task copyDockerFiles(type: Copy) {
 }
 
 task buildDocker(type: DockerBuildImage, dependsOn: 'copyDockerFiles') {
+    url = System.env.DOCKER_HOST
+    certPath = new File(System.env.DOCKER_CERT_PATH)
     description = "Package application as Docker image"
     group = "Docker"
     inputDir = project.file("${project.buildDir}/docker")
