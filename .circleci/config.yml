@@ -57,6 +57,10 @@ jobs:
       - setup_remote_docker
 
       - run:
+            name: whoami
+            command: whoami
+
+      - run:
             name: update perms
             command: sudo chown -R $USER ~/.npm
 
