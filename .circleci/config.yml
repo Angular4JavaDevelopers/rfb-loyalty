@@ -68,9 +68,9 @@ jobs:
             name: update perms
             command: sudo chown -R circleci /usr/lib/node_modules
 
-      - run:
-            name: update perms
-            command: sudo chown -R circleci /usr/local/lib/node_modules
+#      - run:
+#            name: update perms
+#            command: sudo chown -R circleci /usr/local/lib/node_modules
 
       - run:
           name: install yarn
