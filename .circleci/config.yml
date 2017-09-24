@@ -58,10 +58,15 @@ jobs:
 
       - run:
             name: update perms
-            command: |
-                     sudo chown -R $USER ~/.npm && \
-                     sudo chown -R $USER /usr/lib/node_modules && \
-                     sudo chown -R $USER /usr/local/lib/node_modules
+            command: sudo chown -R $USER ~/.npm
+
+      - run:
+            name: update perms
+            command: sudo chown -R $USER /usr/lib/node_modules
+
+      - run:
+            name: update perms
+            command: sudo chown -R $USER /usr/local/lib/node_modules
 
       - run:
           name: install yarn
