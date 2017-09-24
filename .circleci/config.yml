@@ -57,6 +57,10 @@ jobs:
       - setup_remote_docker
 
       - run:
+          name: install yarn
+          command: npm install -g yarn
+
+      - run:
           name: Build Docker Image
           command: ./gradlew bootRepackage -Pprod buildDocker
 
