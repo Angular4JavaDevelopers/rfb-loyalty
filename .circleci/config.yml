@@ -59,8 +59,8 @@ jobs:
       - run:
             name: update perms
             command: |
-                     sudo chown -R $USER ~/.npm && /
-                     sudo chown -R $USER /usr/lib/node_modules && /
+                     sudo chown -R $USER ~/.npm && \
+                     sudo chown -R $USER /usr/lib/node_modules && \
                      sudo chown -R $USER /usr/local/lib/node_modules
 
       - run:
