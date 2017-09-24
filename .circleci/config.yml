@@ -22,6 +22,8 @@ jobs:
       TERM: dumb
 
     steps:
+      - setup_remote_docker
+
       - checkout
 
       # Download and cache dependencies
@@ -54,7 +56,7 @@ jobs:
       - store_artifacts:
           path: ~/junit
 
-      - setup_remote_docker
+
 
       - run:
           name: install yarn
