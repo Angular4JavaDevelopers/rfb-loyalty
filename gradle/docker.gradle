@@ -12,6 +12,15 @@ apply plugin: com.bmuschko.gradle.docker.DockerRemoteApiPlugin
 
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
 
+docker {
+    if (System.env.DOCKER_HOST) {
+        url = System.env.DOCKER_HOST
+    }
+    if (System.env.DOCKER_CERT_PATH) {
+        certPath = new File(System.env.DOCKER_CERT_PATH)
+    }
+}
+
 task copyDockerFiles(type: Copy) {
     description = "Copy Dockerfile and required data to build directory"
     from 'src/main/docker'
