@@ -140,3 +140,5 @@ Desktop.ini
 # ESLint
 ######################
 .eslintcache
+/out/
+out/production/resources/
