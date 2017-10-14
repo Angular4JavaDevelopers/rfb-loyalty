@@ -1,0 +1,32 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "rfbLocation",
+            "otherEntityName": "rfbLocation",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "rfbEventAttendance",
+            "otherEntityName": "rfbEventAttendance",
+            "otherEntityRelationshipName": "rfbEvent"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "eventDate",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "eventCode",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20171014184114",
+    "entityTableName": "rfb_event",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl"
+}
