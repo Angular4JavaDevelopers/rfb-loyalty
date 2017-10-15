@@ -8,12 +8,10 @@
             "otherEntityField": "id"
         },
         {
-            "relationshipType": "one-to-one",
             "relationshipName": "rfbUser",
             "otherEntityName": "rfbUser",
-            "otherEntityField": "id",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "rfbEventAttendance"
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
         }
     ],
     "fields": [
