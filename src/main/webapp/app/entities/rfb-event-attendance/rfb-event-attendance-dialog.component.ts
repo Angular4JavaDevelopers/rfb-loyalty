@@ -41,19 +41,8 @@ export class RfbEventAttendanceDialogComponent implements OnInit {
         this.isSaving = false;
         this.rfbEventService.query()
             .subscribe((res: ResponseWrapper) => { this.rfbevents = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
-        this.rfbUserService
-            .query({filter: 'rfbeventattendance-is-null'})
-            .subscribe((res: ResponseWrapper) => {
-                if (!this.rfbEventAttendance.rfbUserId) {
-                    this.rfbusers = res.json;
-                } else {
-                    this.rfbUserService
-                        .find(this.rfbEventAttendance.rfbUserId)
-                        .subscribe((subRes: RfbUser) => {
-                            this.rfbusers = [subRes].concat(res.json);
-                        }, (subRes: ResponseWrapper) => this.onError(subRes.json));
-                }
-            }, (res: ResponseWrapper) => this.onError(res.json));
+        this.rfbUserService.query()
+            .subscribe((res: ResponseWrapper) => { this.rfbusers = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
 
     clear() {
