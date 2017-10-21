@@ -45,20 +45,6 @@ spring:
             enabled: false
     thymeleaf:
         mode: XHTML
-    social:
-
-        # see https://developers.facebook.com/docs/facebook-login/v2.2
-        facebook:
-            app-id: xxx
-            app-secret: xxx
-
-        # see https://apps.twitter.com/app/
-        twitter:
-          app-id: xxx
-          app-secret: xxx
-
-
-        # jhipster-needle-add-social-configuration
 
 security:
     basic:
