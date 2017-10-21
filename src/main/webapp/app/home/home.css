@@ -2,12 +2,22 @@
 Main page styles
 ========================================================================== */
 
-.hipster {
-    display: inline-block;
-    width: 347px;
-    height: 497px;
-    background: url("../../content/images/hipster.png") no-repeat center top;
+#rfb-home-intro {
+    background: url("../../content/images/beer-light.jpg");
     background-size: contain;
+}
+
+.display-4 {
+    font-family: 'Walter Turncoat', cursive;
+    margin-top:10px;
+}
+
+.events-header {
+    font-family: 'Walter Turncoat', cursive;
+    font-size: 18px;
+    color:#ffffff;
+    text-align: center;
+    margin-top:10px;
 }
 
 /* wait autoprefixer update to allow simple generation of high pixel density media query */
@@ -18,9 +28,6 @@ only screen and (     -o-min-device-pixel-ratio: 2/1),
 only screen and (        min-device-pixel-ratio: 2),
 only screen and (                min-resolution: 192dpi),
 only screen and (                min-resolution: 2dppx) {
-    .hipster {
-        background: url("../../content/images/hipster2x.png") no-repeat center top;
-        background-size: contain;
-    }
+
 }
 
