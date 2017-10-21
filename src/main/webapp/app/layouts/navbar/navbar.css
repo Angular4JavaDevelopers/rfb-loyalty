@@ -7,7 +7,7 @@ Navbar
 }
 
 .jh-navbar {
-    background-color: #353d47;
+    background-color: #ffffff;
     padding: .2em 1em;
 }
 
@@ -36,6 +36,7 @@ Navbar
 
 .jh-navbar a.nav-link {
     font-weight: 400;
+    color: #000000;
 }
 
 .jh-navbar .jh-navbar-toggler {
@@ -73,15 +74,15 @@ Logo styles
 }
 
 .logo .logo-img {
-    height: 45px;
+    height: 60px;
     display: inline-block;
     vertical-align: middle;
-    width: 70px;
+    width: 150px;
 }
 
 .logo-img {
     height: 100%;
-    background: url("../../../content/images/logo-jhipster.png") no-repeat center center;
+    background: url("../../../content/images/rfb_logo_small.png") no-repeat center center;
     background-size: contain;
     width: 100%;
 }
