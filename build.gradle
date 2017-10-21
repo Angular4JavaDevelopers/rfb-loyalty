@@ -238,3 +238,30 @@ if (project.hasProperty('nodeInstall')) {
 compileJava.dependsOn processResources
 processResources.dependsOn cleanResources,bootBuildInfo
 bootBuildInfo.mustRunAfter cleanResources
+
+def generatedSources = "$buildDir/generated"
+def generatedOutputDir = file("$generatedSources")
+
+/*
+ see: https://youtrack.jetbrains.com/issue/IDEA-124090
+
+ create generated .java files in different folder than classes
+ In IntelliJ 2016.3.x: Enable Annotation Processing, then set generated sources,
+ relative to module output dir, at path '../../generated'
+ */
+compileJava {
+    doFirst {
+        generatedOutputDir.exists() || generatedOutputDir.mkdirs()
+        options.compilerArgs = [
+            '-s', "${generatedSources}"
+        ]
+    }
+}
+
+idea {
+    module {
+        downloadSources = true
+        // tell intellij where to find generated sources
+        sourceDirs += generatedOutputDir
+    }
+}

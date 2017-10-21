@@ -13,7 +13,6 @@
 # Full reference is available at:
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 # ===================================================================
-
 management:
     security:
         roles: ADMIN
@@ -120,3 +119,8 @@ jhipster:
 # ===================================================================
 
 application:
+
+logging:
+  level:
+    com.rfb.service: debug
+    com.rfb.aop.logging: error
