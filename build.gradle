@@ -23,6 +23,7 @@ plugins {
 }
 
 apply plugin: 'java'
+apply plugin: 'groovy'
 sourceCompatibility=1.8
 targetCompatibility=1.8
 apply plugin: 'maven'
@@ -202,6 +203,8 @@ dependencies {
     testCompile "org.mockito:mockito-core"
     testCompile "com.mattbertolini:liquibase-slf4j:${liquibase_slf4j_version}"
     testCompile "org.hamcrest:hamcrest-library"
+    testCompile group: 'org.spockframework', name: 'spock-core', version: '1.1-groovy-2.4'
+    testCompile group: 'org.spockframework', name: 'spock-spring', version: '1.1-groovy-2.4'
     optional ("org.springframework.boot:spring-boot-configuration-processor:${spring_boot_version}") {
         exclude group: 'com.vaadin.external.google', module: 'android-json'
     }
