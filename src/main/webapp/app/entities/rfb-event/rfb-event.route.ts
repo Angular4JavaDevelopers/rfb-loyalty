@@ -34,7 +34,7 @@ export const rfbEventRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'RfbEvents'
+            pageTitle: 'Events'
         },
         canActivate: [UserRouteAccessService]
     }, {
@@ -42,7 +42,7 @@ export const rfbEventRoute: Routes = [
         component: RfbEventDetailComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'RfbEvents'
+            pageTitle: 'Events'
         },
         canActivate: [UserRouteAccessService]
     }
@@ -54,7 +54,7 @@ export const rfbEventPopupRoute: Routes = [
         component: RfbEventPopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'RfbEvents'
+            pageTitle: 'Events'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
@@ -64,7 +64,7 @@ export const rfbEventPopupRoute: Routes = [
         component: RfbEventPopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'RfbEvents'
+            pageTitle: 'Events'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
@@ -74,7 +74,7 @@ export const rfbEventPopupRoute: Routes = [
         component: RfbEventDeletePopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'RfbEvents'
+            pageTitle: 'Events'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
