@@ -1,7 +1,7 @@
 <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
 
     <div class="modal-header">
-        <h4 class="modal-title" id="myRfbEventAttendanceLabel">Create or edit a Rfb Event Attendance</h4>
+        <h4 class="modal-title" id="myRfbEventAttendanceLabel">Create or edit a Event Attendance</h4>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 (click)="clear()">&times;</button>
     </div>
@@ -24,14 +24,14 @@
         </div>
 
         <div class="form-group">
-            <label class="form-control-label" for="field_rfbEvent">Rfb Event</label>
+            <label class="form-control-label" for="field_rfbEvent">Event</label>
             <select class="form-control" id="field_rfbEvent" name="rfbEvent" [(ngModel)]="rfbEventAttendance.rfbEventId" >
                 <option [ngValue]="null"></option>
                 <option [ngValue]="rfbEventOption.id" *ngFor="let rfbEventOption of rfbevents; trackBy: trackRfbEventById">{{rfbEventOption.id}}</option>
             </select>
         </div>
         <div class="form-group">
-            <label class="form-control-label" for="field_rfbUser">Rfb User</label>
+            <label class="form-control-label" for="field_rfbUser">User</label>
             <select class="form-control" id="field_rfbUser" name="rfbUser" [(ngModel)]="rfbEventAttendance.rfbUserId" >
                 <option [ngValue]="null"></option>
                 <option [ngValue]="rfbUserOption.id" *ngFor="let rfbUserOption of rfbusers; trackBy: trackRfbUserById">{{rfbUserOption.id}}</option>

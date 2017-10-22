@@ -31,7 +31,7 @@ export class RfbEventAttendanceDeleteDialogComponent {
         this.rfbEventAttendanceService.delete(id).subscribe((response) => {
             this.eventManager.broadcast({
                 name: 'rfbEventAttendanceListModification',
-                content: 'Deleted an rfbEventAttendance'
+                content: 'Deleted an Event Attendance'
             });
             this.activeModal.dismiss(true);
         });

@@ -1,6 +1,6 @@
 
 <div *ngIf="rfbEventAttendance">
-    <h2><span>Rfb Event Attendance</span> {{rfbEventAttendance.id}}</h2>
+    <h2><span>Event Attendance</span> {{rfbEventAttendance.id}}</h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="row-md jh-entity-details">
@@ -8,13 +8,13 @@
         <dd>
             <span>{{rfbEventAttendance.attendanceDate | date:'mediumDate'}}</span>
         </dd>
-        <dt><span>Rfb Event</span></dt>
+        <dt><span>Event</span></dt>
         <dd>
             <div *ngIf="rfbEventAttendance.rfbEventId">
                 <a [routerLink]="['/rfb-event', rfbEventAttendance.rfbEventId]">{{rfbEventAttendance.rfbEventId}}</a>
             </div>
         </dd>
-        <dt><span>Rfb User</span></dt>
+        <dt><span>User</span></dt>
         <dd>
             <div *ngIf="rfbEventAttendance.rfbUserId">
                 <a [routerLink]="['/rfb-user', rfbEventAttendance.rfbUserId]">{{rfbEventAttendance.rfbUserId}}</a>
