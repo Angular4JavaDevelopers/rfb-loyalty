@@ -13,7 +13,7 @@ export const rfbUserRoute: Routes = [
         component: RfbUserComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'RfbUsers'
+            pageTitle: 'Runners'
         },
         canActivate: [UserRouteAccessService]
     }, {
@@ -21,7 +21,7 @@ export const rfbUserRoute: Routes = [
         component: RfbUserDetailComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'RfbUsers'
+            pageTitle: 'Runners'
         },
         canActivate: [UserRouteAccessService]
     }
@@ -33,7 +33,7 @@ export const rfbUserPopupRoute: Routes = [
         component: RfbUserPopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'RfbUsers'
+            pageTitle: 'Runners'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
@@ -43,7 +43,7 @@ export const rfbUserPopupRoute: Routes = [
         component: RfbUserPopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'RfbUsers'
+            pageTitle: 'Runners'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
@@ -53,7 +53,7 @@ export const rfbUserPopupRoute: Routes = [
         component: RfbUserDeletePopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'RfbUsers'
+            pageTitle: 'Runners'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
