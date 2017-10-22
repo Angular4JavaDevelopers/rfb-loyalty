@@ -1,6 +1,6 @@
 
 <div *ngIf="rfbEvent">
-    <h2><span>Rfb Event</span> {{rfbEvent.id}}</h2>
+    <h2><span>Event</span> {{rfbEvent.id}}</h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="row-md jh-entity-details">
@@ -12,7 +12,7 @@
         <dd>
             <span>{{rfbEvent.eventCode}}</span>
         </dd>
-        <dt><span>Rfb Location</span></dt>
+        <dt><span>Location</span></dt>
         <dd>
             <div *ngIf="rfbEvent.rfbLocationId">
                 <a [routerLink]="['/rfb-location', rfbEvent.rfbLocationId]">{{rfbEvent.rfbLocationId}}</a>

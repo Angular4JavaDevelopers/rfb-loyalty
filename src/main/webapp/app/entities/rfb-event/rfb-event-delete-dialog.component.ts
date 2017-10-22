@@ -31,7 +31,7 @@ export class RfbEventDeleteDialogComponent {
         this.rfbEventService.delete(id).subscribe((response) => {
             this.eventManager.broadcast({
                 name: 'rfbEventListModification',
-                content: 'Deleted an rfbEvent'
+                content: 'Deleted an Event'
             });
             this.activeModal.dismiss(true);
         });
