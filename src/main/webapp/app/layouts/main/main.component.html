@@ -3,7 +3,8 @@
     <router-outlet name="navbar"></router-outlet>
 </div>
 <div class="container-fluid">
-    <div class="card jh-card">
+    <!-- I don't want the home page to have the gutter (padding & margins) that the other pages do -->
+    <div [ngClass]="{'card jh-card': router.url != '/'}">
         <router-outlet></router-outlet>
         <router-outlet name="popup"></router-outlet>
     </div>
