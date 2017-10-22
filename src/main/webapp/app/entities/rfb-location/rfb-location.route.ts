@@ -34,7 +34,7 @@ export const rfbLocationRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'RfbLocations'
+            pageTitle: 'Locations'
         },
         canActivate: [UserRouteAccessService]
     }, {
@@ -42,7 +42,7 @@ export const rfbLocationRoute: Routes = [
         component: RfbLocationDetailComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'RfbLocations'
+            pageTitle: 'Locations'
         },
         canActivate: [UserRouteAccessService]
     }
@@ -54,7 +54,7 @@ export const rfbLocationPopupRoute: Routes = [
         component: RfbLocationPopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'RfbLocations'
+            pageTitle: 'Locations'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
@@ -74,7 +74,7 @@ export const rfbLocationPopupRoute: Routes = [
         component: RfbLocationDeletePopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'RfbLocations'
+            pageTitle: 'Locations'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
