@@ -11,10 +11,10 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring", uses = {RfbLocationMapper.class, })
 public interface RfbEventMapper extends EntityMapper <RfbEventDTO, RfbEvent> {
 
-    @Mapping(source = "rfbLocation.id", target = "rfbLocationId")
+    @Mapping(source = "rfbLocation", target = "rfbLocationDTO")
     RfbEventDTO toDto(RfbEvent rfbEvent);
 
-    @Mapping(source = "rfbLocationId", target = "rfbLocation")
+    @Mapping(source = "rfbLocationDTO", target = "rfbLocation")
     @Mapping(target = "rfbEventAttendances", ignore = true)
     RfbEvent toEntity(RfbEventDTO rfbEventDTO);
     default RfbEvent fromId(Long id) {
