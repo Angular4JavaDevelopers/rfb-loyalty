@@ -8,9 +8,12 @@ import { Title } from '@angular/platform-browser';
     templateUrl: './main.component.html'
 })
 export class JhiMainComponent implements OnInit {
-    cardStyles: string;
+    public cardStyles: string;
+    public currentRoute: string;
 
-    constructor(private titleService: Title, private router: Router) {}
+    constructor(private titleService: Title, private router: Router) {
+        this.currentRoute = router.url;
+    }
 
     private getPageTitle(routeSnapshot: ActivatedRouteSnapshot) {
         let title: string = (routeSnapshot.data && routeSnapshot.data['pageTitle']) ? routeSnapshot.data['pageTitle'] : 'rfbloyaltyApp';

@@ -4,7 +4,7 @@
 </div>
 <div class="container-fluid">
     <!-- I don't want the home page to have the gutter (padding & margins) that the other pages do -->
-    <div [ngClass]="{'card jh-card': router.url != '/'}">
+    <div [ngClass]="{'card jh-card': currentRoute != '/'}">
         <router-outlet></router-outlet>
         <router-outlet name="popup"></router-outlet>
     </div>
