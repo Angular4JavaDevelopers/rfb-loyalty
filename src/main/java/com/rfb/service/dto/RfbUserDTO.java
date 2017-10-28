@@ -1,6 +1,8 @@
 package com.rfb.service.dto;
 
 
+import com.rfb.domain.RfbLocation;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -13,7 +15,7 @@ public class RfbUserDTO implements Serializable {
 
     private String username;
 
-    private Long homeLocationId;
+    private RfbLocationDTO rfbLocationDTO;
 
     public Long getId() {
         return id;
@@ -31,12 +33,12 @@ public class RfbUserDTO implements Serializable {
         this.username = username;
     }
 
-    public Long getHomeLocationId() {
-        return homeLocationId;
+    public RfbLocationDTO getRfbLocationDTO() {
+        return rfbLocationDTO;
     }
 
-    public void setHomeLocationId(Long rfbLocationId) {
-        this.homeLocationId = rfbLocationId;
+    public void setRfbLocationDTO(RfbLocationDTO rfbLocationDTO) {
+        this.rfbLocationDTO = rfbLocationDTO;
     }
 
     @Override
