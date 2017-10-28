@@ -11,14 +11,12 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring", uses = {RfbEventMapper.class, RfbUserMapper.class, })
 public interface RfbEventAttendanceMapper extends EntityMapper <RfbEventAttendanceDTO, RfbEventAttendance> {
 
-    @Mapping(source = "rfbEvent.id", target = "rfbEventId")
-
-    @Mapping(source = "rfbUser.id", target = "rfbUserId")
+    @Mapping(source = "rfbEvent", target = "rfbEventDTO")
+    @Mapping(source = "rfbUser", target = "rfbUserDTO")
     RfbEventAttendanceDTO toDto(RfbEventAttendance rfbEventAttendance);
 
-    @Mapping(source = "rfbEventId", target = "rfbEvent")
-
-    @Mapping(source = "rfbUserId", target = "rfbUser")
+    @Mapping(source = "rfbEventDTO", target = "rfbEvent")
+    @Mapping(source = "rfbUserDTO", target = "rfbUser")
     RfbEventAttendance toEntity(RfbEventAttendanceDTO rfbEventAttendanceDTO);
     default RfbEventAttendance fromId(Long id) {
         if (id == null) {
