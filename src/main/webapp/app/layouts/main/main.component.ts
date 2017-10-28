@@ -11,15 +11,14 @@ export class JhiMainComponent implements OnInit {
     public cardStyles: string;
     public currentRoute: string;
 
-    constructor(private titleService: Title, private router: Router) {
-        this.currentRoute = router.url;
-    }
+    constructor(private titleService: Title, private router: Router) {}
 
     private getPageTitle(routeSnapshot: ActivatedRouteSnapshot) {
         let title: string = (routeSnapshot.data && routeSnapshot.data['pageTitle']) ? routeSnapshot.data['pageTitle'] : 'rfbloyaltyApp';
         if (routeSnapshot.firstChild) {
             title = this.getPageTitle(routeSnapshot.firstChild) || title;
         }
+        this.currentRoute = this.router.url;
         return title;
     }
 
