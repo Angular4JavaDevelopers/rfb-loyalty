@@ -25,16 +25,16 @@
 
         <div class="form-group">
             <label class="form-control-label" for="field_rfbEvent">Event</label>
-            <select class="form-control" id="field_rfbEvent" name="rfbEvent" [(ngModel)]="rfbEventAttendance.rfbEventId" >
+            <select class="form-control" id="field_rfbEvent" name="rfbEvent" [(ngModel)]="rfbEventAttendance.rfbEventDTO.id" >
                 <option [ngValue]="null"></option>
-                <option [ngValue]="rfbEventOption.id" *ngFor="let rfbEventOption of rfbevents; trackBy: trackRfbEventById">{{rfbEventOption.id}}</option>
+                <option [ngValue]="rfbEventOption.id" *ngFor="let rfbEventOption of rfbevents; trackBy: trackRfbEventById">{{rfbEventOption.rfbLocationDTO.locationName}} - {{rfbEventOption.eventDate | date}}</option>
             </select>
         </div>
         <div class="form-group">
             <label class="form-control-label" for="field_rfbUser">User</label>
-            <select class="form-control" id="field_rfbUser" name="rfbUser" [(ngModel)]="rfbEventAttendance.rfbUserId" >
+            <select class="form-control" id="field_rfbUser" name="rfbUser" [(ngModel)]="rfbEventAttendance.rfbUserDTO.id" >
                 <option [ngValue]="null"></option>
-                <option [ngValue]="rfbUserOption.id" *ngFor="let rfbUserOption of rfbusers; trackBy: trackRfbUserById">{{rfbUserOption.id}}</option>
+                <option [ngValue]="rfbUserOption.id" *ngFor="let rfbUserOption of rfbusers; trackBy: trackRfbUserById">{{rfbUserOption.username}}</option>
             </select>
         </div>
     </div>
