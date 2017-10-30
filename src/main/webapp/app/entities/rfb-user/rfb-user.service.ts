@@ -15,8 +15,6 @@ export class RfbUserService {
 
     create(rfbUser: RfbUser): Observable<RfbUser> {
         const copy = this.convert(rfbUser);
-        console.log(rfbUser);
-        console.log(copy);
         return this.http.post(this.resourceUrl, copy).map((res: Response) => {
             return res.json();
         });

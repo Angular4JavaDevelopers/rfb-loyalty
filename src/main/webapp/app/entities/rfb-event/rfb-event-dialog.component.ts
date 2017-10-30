@@ -36,7 +36,14 @@ export class RfbEventDialogComponent implements OnInit {
     ngOnInit() {
         this.isSaving = false;
         this.rfbLocationService.query()
-            .subscribe((res: ResponseWrapper) => { this.rfblocations = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+            .subscribe((res: ResponseWrapper) => {
+                    this.rfblocations = res.json;
+                },
+                (res: ResponseWrapper) => this.onError(res.json)
+            );
+        if (typeof this.rfbEvent.rfbLocationDTO === 'undefined') {
+            this.rfbEvent.rfbLocationDTO = new RfbLocation();
+        }
     }
 
     clear() {
