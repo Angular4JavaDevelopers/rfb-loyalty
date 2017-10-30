@@ -339,7 +339,7 @@ public class UserResourceIntTest {
         User updatedUser = userRepository.findOne(user.getId());
 
         Set<String> authorities = new HashSet<>();
-        authorities.add("ROLE_USER");
+        authorities.add("ROLE_RUNNER");
         ManagedUserVM managedUserVM = new ManagedUserVM(
             updatedUser.getId(),
             updatedUser.getLogin(),
@@ -383,7 +383,7 @@ public class UserResourceIntTest {
         User updatedUser = userRepository.findOne(user.getId());
 
         Set<String> authorities = new HashSet<>();
-        authorities.add("ROLE_USER");
+        authorities.add("ROLE_RUNNER");
         ManagedUserVM managedUserVM = new ManagedUserVM(
             updatedUser.getId(),
             UPDATED_LOGIN,
@@ -531,7 +531,7 @@ public class UserResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$").isArray())
-            .andExpect(jsonPath("$").value(containsInAnyOrder("ROLE_USER", "ROLE_ADMIN")));
+            .andExpect(jsonPath("$").value(containsInAnyOrder("ROLE_RUNNER", "ROLE_ORGANIZER", "ROLE_ADMIN")));
     }
 
     @Test
@@ -570,7 +570,7 @@ public class UserResourceIntTest {
             null,
             DEFAULT_LOGIN,
             null,
-            Stream.of(AuthoritiesConstants.USER).collect(Collectors.toSet()));
+            Stream.of(AuthoritiesConstants.RUNNER).collect(Collectors.toSet()));
         User user = userMapper.userDTOToUser(userDTO);
         assertThat(user.getId()).isEqualTo(DEFAULT_ID);
         assertThat(user.getLogin()).isEqualTo(DEFAULT_LOGIN);
@@ -584,7 +584,7 @@ public class UserResourceIntTest {
         assertThat(user.getCreatedDate()).isNotNull();
         assertThat(user.getLastModifiedBy()).isNull();
         assertThat(user.getLastModifiedDate()).isNotNull();
-        assertThat(user.getAuthorities()).extracting("name").containsExactly(AuthoritiesConstants.USER);
+        assertThat(user.getAuthorities()).extracting("name").containsExactly(AuthoritiesConstants.RUNNER);
     }
 
     @Test
@@ -597,7 +597,7 @@ public class UserResourceIntTest {
 
         Set<Authority> authorities = new HashSet<>();
         Authority authority = new Authority();
-        authority.setName(AuthoritiesConstants.USER);
+        authority.setName(AuthoritiesConstants.RUNNER);
         authorities.add(authority);
         user.setAuthorities(authorities);
 
@@ -615,7 +615,7 @@ public class UserResourceIntTest {
         assertThat(userDTO.getCreatedDate()).isEqualTo(user.getCreatedDate());
         assertThat(userDTO.getLastModifiedBy()).isEqualTo(DEFAULT_LOGIN);
         assertThat(userDTO.getLastModifiedDate()).isEqualTo(user.getLastModifiedDate());
-        assertThat(userDTO.getAuthorities()).containsExactly(AuthoritiesConstants.USER);
+        assertThat(userDTO.getAuthorities()).containsExactly(AuthoritiesConstants.RUNNER);
         assertThat(userDTO.toString()).isNotNull();
     }
 
@@ -634,10 +634,10 @@ public class UserResourceIntTest {
         authorityB.setName(AuthoritiesConstants.ADMIN);
         assertThat(authorityA).isNotEqualTo(authorityB);
 
-        authorityA.setName(AuthoritiesConstants.USER);
+        authorityA.setName(AuthoritiesConstants.RUNNER);
         assertThat(authorityA).isNotEqualTo(authorityB);
 
-        authorityB.setName(AuthoritiesConstants.USER);
+        authorityB.setName(AuthoritiesConstants.RUNNER);
         assertThat(authorityA).isEqualTo(authorityB);
         assertThat(authorityA.hashCode()).isEqualTo(authorityB.hashCode());
     }

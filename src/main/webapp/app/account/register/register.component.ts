@@ -3,6 +3,11 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 import { Register } from './register.service';
 import { LoginModalService } from '../../shared';
+import { RfbLocationService } from '../../entities/rfb-location/rfb-location.service';
+import { RfbLocation } from '../../entities/rfb-location/rfb-location.model';
+import { ResponseWrapper } from '../../shared/model/response-wrapper.model';
+import {RfbUserService} from '../../entities/rfb-user/rfb-user.service';
+import {RfbUser} from '../../entities/rfb-user/index';
 
 @Component({
     selector: 'jhi-register',
@@ -18,18 +23,23 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     registerAccount: any;
     success: boolean;
     modalRef: NgbModalRef;
+    locations: RfbLocation[];
 
     constructor(
         private loginModalService: LoginModalService,
         private registerService: Register,
         private elementRef: ElementRef,
-        private renderer: Renderer
-    ) {
-    }
+        private renderer: Renderer,
+        private locationService: RfbLocationService,
+        private runnersService: RfbUserService
+    ) {}
 
     ngOnInit() {
         this.success = false;
-        this.registerAccount = {};
+        this.registerAccount = {
+            homeLocation: null
+        };
+        this.loadLocations();
     }
 
     ngAfterViewInit() {
@@ -46,13 +56,41 @@ export class RegisterComponent implements OnInit, AfterViewInit {
             this.errorEmailExists = null;
             this.registerAccount.langKey = 'en';
             this.registerService.save(this.registerAccount).subscribe(() => {
+                console.log(this.registerAccount);
+                // after we successfully save a user we need to lay down a record in the runner table
+                this.locationService.find(parseInt(this.registerAccount.homeLocation, 10)).subscribe(
+                    (runnersHomeLocation: RfbLocation) => {
+                        this.runnersService
+                            .create(new RfbUser(null, this.registerAccount.login, runnersHomeLocation, null))
+                            .subscribe(
+                                () => {
+                                    console.log('Runner was saved!');
+                                }
+                            );
+                    }
+                );
                 this.success = true;
             }, (response) => this.processError(response));
         }
+
     }
 
     openLogin() {
         this.modalRef = this.loginModalService.open();
+    }
+
+    loadLocations() {
+        this.locations = [];
+        this.locationService.query({
+            page: 0,
+            size: 100,
+            sort: ['locationName,runDayOfWeek', 'ASC']}).subscribe(
+            (res: ResponseWrapper) => {
+                this.locations = res.json;
+            },
+            (res: ResponseWrapper) => {
+            }
+        );
     }
 
     private processError(response) {

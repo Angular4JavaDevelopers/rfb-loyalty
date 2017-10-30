@@ -35,19 +35,24 @@
                         <small class="form-text text-danger" *ngIf="login.errors.required">
                             Your username is required.
                         </small>
-                        <small class="form-text text-danger" *ngIf="login.errors.minlength"
-                               >
+                        <small class="form-text text-danger" *ngIf="login.errors.minlength">
                             Your username is required to be at least 1 character.
                         </small>
-                        <small class="form-text text-danger" *ngIf="login.errors.maxlength"
-                               >
+                        <small class="form-text text-danger" *ngIf="login.errors.maxlength">
                             Your username cannot be longer than 50 characters.
                         </small>
-                        <small class="form-text text-danger" *ngIf="login.errors.pattern"
-                              >
+                        <small class="form-text text-danger" *ngIf="login.errors.pattern">
                             Your username can only contain lower-case letters and digits.
                         </small>
                     </div>
+                </div>
+                <div class="form-group">
+                    <label for="homeLocation" class="form-control-label">Home Location</label>
+                    <select class="form-control" id="homeLocation" name="homeLocation" [(ngModel)]="registerAccount.homeLocation" #homeLocation="ngModel" required>
+                        <option [value]="null" [selected]="">Select Home Location</option>
+                        <option *ngFor="let location of locations" [value]="location.id">{{location.locationName}}</option>
+                    </select>
+                    <!--<small class="form-text text-danger" *ngIf="homeLocation.errors">Select a location dummy</small>-->
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="email">Email</label>
@@ -115,10 +120,6 @@
                 <button type="submit" [disabled]="registerForm.form.invalid" class="btn btn-primary">Register</button>
             </form>
             <p></p>
-            <div class="alert alert-warning">
-                <span>If you want to </span>
-                <a class="alert-link" (click)="openLogin()">sign in</a><span>, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").</span>
-            </div>
         </div>
         <div class="col-md-4">
             <br/>

@@ -37,11 +37,11 @@ export class RfbUserDialogComponent implements OnInit {
         this.rfbLocationService
             .query({filter: 'rfbuser-is-null'})
             .subscribe((res: ResponseWrapper) => {
-                if (!this.rfbUser.homeLocationId) {
+                if (!this.rfbUser.rfbLocationDTO) {
                     this.homelocations = res.json;
                 } else {
                     this.rfbLocationService
-                        .find(this.rfbUser.homeLocationId)
+                        .find(this.rfbUser.rfbLocationDTO.id)
                         .subscribe((subRes: RfbLocation) => {
                             this.homelocations = [subRes].concat(res.json);
                         }, (subRes: ResponseWrapper) => this.onError(subRes.json));
