@@ -1,8 +1,11 @@
 package com.rfb.service.impl;
 
 import com.rfb.domain.RfbEvent;
+import com.rfb.domain.RfbLocation;
 import com.rfb.repository.RfbEventRepository;
+import com.rfb.repository.RfbLocationRepository;
 import com.rfb.service.RfbEventService;
+import com.rfb.service.RfbLocationService;
 import com.rfb.service.dto.RfbEventDTO;
 import com.rfb.service.mapper.RfbEventMapper;
 import org.slf4j.Logger;
@@ -11,6 +14,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 
 /**
@@ -26,9 +31,12 @@ public class RfbEventServiceImpl implements RfbEventService{
 
     private final RfbEventMapper rfbEventMapper;
 
-    public RfbEventServiceImpl(RfbEventRepository rfbEventRepository, RfbEventMapper rfbEventMapper) {
+    private final RfbLocationRepository locationRepository;
+
+    public RfbEventServiceImpl(RfbEventRepository rfbEventRepository, RfbEventMapper rfbEventMapper, RfbLocationRepository locationRepository) {
         this.rfbEventRepository = rfbEventRepository;
         this.rfbEventMapper = rfbEventMapper;
+        this.locationRepository = locationRepository;
     }
 
     /**
@@ -83,4 +91,5 @@ public class RfbEventServiceImpl implements RfbEventService{
         log.debug("Request to delete RfbEvent : {}", id);
         rfbEventRepository.delete(id);
     }
+
 }

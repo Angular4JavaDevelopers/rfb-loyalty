@@ -2,10 +2,13 @@ package com.rfb.repository;
 
 import com.rfb.domain.RfbEvent;
 import com.rfb.domain.RfbLocation;
+import com.rfb.service.dto.RfbEventDTO;
+import com.rfb.service.dto.RfbLocationDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.List;
 
 
 /**

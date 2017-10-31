@@ -1,6 +1,7 @@
 package com.rfb.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.rfb.domain.RfbEvent;
 import com.rfb.service.RfbEventService;
 import com.rfb.service.dto.RfbEventDTO;
 import com.rfb.web.rest.util.HeaderUtil;
@@ -122,4 +123,5 @@ public class RfbEventResource {
         rfbEventService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
 }

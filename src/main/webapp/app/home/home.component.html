@@ -1,13 +1,43 @@
 <div id="rfb-home-intro" class="row">
-
+    
     <div class="col-md-4">
         <p class="events-header">Running for Brews 5k Events</p>
-        <img src="../../content/images/kevincover.jpg" width="555" height="226"/>
+        <img src="../../content/images/kevincover.jpg" width="555" height="226" class="img-border-white"/>
     </div>
     <div class="col-md-8">
         <h1 class="display-4">We Love 5k Running & Craft Brews</h1>
-        <p>Bacon ipsum dolor amet flank jowl spare ribs pork belly kevin, shankle short ribs t-bone tenderloin beef ribs alcatra tongue meatloaf. Brisket venison swine prosciutto pork chop ribeye, shank pancetta pork loin leberkas. Tenderloin short ribs ground round pork belly tongue. Salami bacon shoulder t-bone meatloaf burgdoggen ham hock. T-bone meatball beef ribs tri-tip cow. Rump pork ribeye bresaola leberkas kielbasa drumstick pancetta pork belly. Hamburger cupim alcatra leberkas capicola kevin chuck tongue porchetta jerky tri-tip.</p>
-        <p>Sausage pastrami short ribs tri-tip capicola jowl, biltong chicken flank pork belly sirloin. Strip steak swine short loin beef ribs boudin, burgdoggen sirloin jerky landjaeger pig turkey. Shoulder ball tip pig flank. Meatloaf pork chop corned beef, leberkas tail salami tri-tip ham bresaola shank pastrami tenderloin bacon frankfurter. Swine ham turkey, biltong fatback boudin sirloin.</p>
-        <p>Capicola picanha pork belly, beef ribs pig short ribs ground round ham. Meatball pig boudin leberkas tongue, kielbasa pancetta chicken flank chuck. Porchetta leberkas burgdoggen jowl tail landjaeger ham hock pork chop tongue chuck jerky. Tri-tip burgdoggen flank short ribs chicken shankle ground round tail fatback pastrami. Sausage jerky pork chop chicken alcatra strip steak rump biltong bresaola kielbasa short ribs. Kevin short ribs beef, tail beef ribs leberkas ball tip picanha pork belly t-bone meatball burgdoggen chuck capicola. Bresaola short loin kielbasa, frankfurter venison ground round tenderloin t-bone picanha cupim.</p>
-    </div>
-</div>
+        <p><strong>Running for Brews</strong> celebrates our love for fitness and craft brews. We meet a local bars, run a 2 or 3.1 mile route, and then drink delicious craft brews at the finish. With over 10,000+ members nationwide, RFB is continuously gathering like-minded runners to socialize and have some fun. <a href="http://runningforbrews.com/aboutus.html">Find Out How It All Began</a></p>
+
+        <div *jhiHasAnyAuthority="'ROLE_RUNNER'" class="card col-md-12">
+            <div class="card-body">
+                <h4>Check-in for today's run!</h4>
+                <p>Please use the form to check in to today's event. If you don't know the code please ask your organizer. </p>
+                <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+                    <div class="modal-body">
+                        <jhi-alert-error></jhi-alert-error>
+                        <div class="form-group">
+                            <label class="form-control-label" for="field_location">Location</label>
+                            <select class="form-control" id="field_location" name="location" #location>
+                                <option [ngValue]="null"></option>
+                                <option [ngValue]="location.id" *ngFor="let location of locations">{{location.locationName}}</option>
+                            </select>
+                            <small><a href="/" (click)="setHomeLocation()">SET AS HOME LOCATION</a></small>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" for="field_eventCode">Event Code</label>
+                            <input type="text" class="form-control" name="eventCode" id="field_eventCode"/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+                            <span class="fa fa-ban"></span>&nbsp;<span>Cancel</span>
+                        </button>
+                        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                            <span class="fa fa-save"></span>&nbsp;<span>Save</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div> <!-- end right column -->
+</div><!-- end row -->

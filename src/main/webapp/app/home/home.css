@@ -5,6 +5,7 @@ Main page styles
 #rfb-home-intro {
     background: url("../../content/images/beer-light.jpg");
     background-size: contain;
+    padding: 20px 0px 60px 0px;
 }
 
 .display-4 {
@@ -18,6 +19,10 @@ Main page styles
     color:#ffffff;
     text-align: center;
     margin-top:10px;
+}
+
+.img-border-white {
+    border: solid #ffffff 5px;
 }
 
 /* wait autoprefixer update to allow simple generation of high pixel density media query */
