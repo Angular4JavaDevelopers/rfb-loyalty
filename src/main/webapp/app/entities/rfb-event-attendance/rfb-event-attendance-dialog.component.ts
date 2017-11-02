@@ -13,6 +13,7 @@ import {RfbEvent, RfbEventService} from '../rfb-event';
 import {RfbUserService} from '../rfb-user';
 import {ResponseWrapper} from '../../shared';
 import {User} from '../../shared/user/user.model';
+import {UserService} from '../../shared/user/user.service';
 
 @Component({
     selector: 'jhi-rfb-event-attendance-dialog',
@@ -31,7 +32,7 @@ export class RfbEventAttendanceDialogComponent implements OnInit {
         private alertService: JhiAlertService,
         private rfbEventAttendanceService: RfbEventAttendanceService,
         private rfbEventService: RfbEventService,
-        private rfbUserService: RfbUserService,
+        private userService: UserService,
         private eventManager: JhiEventManager
     ) {
     }
@@ -40,7 +41,7 @@ export class RfbEventAttendanceDialogComponent implements OnInit {
         this.isSaving = false;
         this.rfbEventService.query()
             .subscribe((res: ResponseWrapper) => { this.rfbevents = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
-        this.rfbUserService.query()
+        this.userService.findByAuthority('ROLE_RUNNER')
             .subscribe((res: ResponseWrapper) => { this.users = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
         if (typeof this.rfbEventAttendance.rfbEventDTO === 'undefined') {
             this.rfbEventAttendance.rfbEventDTO = new RfbEvent();

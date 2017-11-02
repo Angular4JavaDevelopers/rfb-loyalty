@@ -224,6 +224,11 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
+    public Page<UserDTO> getAllManagedUsersByAuthority(Pageable pageable, String authority) {
+        return userRepository.findAllByAuthoritiesEquals(pageable, authorityRepository.findOne(authority)).map(UserDTO::new);
+    }
+
+    @Transactional(readOnly = true)
     public Optional<User> getUserWithAuthoritiesByLogin(String login) {
         return userRepository.findOneWithAuthoritiesByLogin(login);
     }
