@@ -21,7 +21,7 @@ public class RfbLocationRepositoryTest extends AbstractRepositoryTest{
     @Before
     public void setUp() throws Exception {
         RfbBootstrap rfbBootstrap = new RfbBootstrap(rfbLocationRepository, rfbEventRepository,
-            rfbEventAttendanceRepository, rfbUserRepository);
+            rfbEventAttendanceRepository, userRepository, passwordEncoder);
     }
 
     @Test
