@@ -1,5 +1,5 @@
 <div id="rfb-home-intro" class="row">
-    
+
     <div class="col-md-4">
         <p class="events-header">Running for Brews 5k Events</p>
         <img src="../../content/images/kevincover.jpg" width="555" height="226" class="img-border-white"/>
@@ -12,7 +12,7 @@
             <div class="card-body">
                 <h4>Check-in for today's run!</h4>
                 <p>Please use the form to check in to today's event. If you don't know the code please ask your organizer. </p>
-                <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+                <form name="editForm" role="form" novalidate (ngSubmit)="checkIn()" #editForm="ngForm">
                     <div class="modal-body">
                         <jhi-alert-error></jhi-alert-error>
                         <div class="form-group">
@@ -25,7 +25,7 @@
                         </div>
                         <div class="form-group">
                             <label class="form-control-label" for="field_eventCode">Event Code</label>
-                            <input type="text" class="form-control" name="eventCode" id="field_eventCode"/>
+                            <input type="text" class="form-control" name="eventCode" id="field_eventCode" #eventCode />
                         </div>
                     </div>
                     <div class="modal-footer">
