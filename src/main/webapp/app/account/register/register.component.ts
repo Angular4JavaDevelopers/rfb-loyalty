@@ -56,7 +56,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
             this.errorEmailExists = null;
             this.registerAccount.langKey = 'en';
             this.registerService.save(this.registerAccount).subscribe(() => {
-                console.log(this.registerAccount);
                 // after we successfully save a user we need to lay down a record in the runner table
                 this.locationService.find(parseInt(this.registerAccount.homeLocation, 10)).subscribe(
                     (runnersHomeLocation: RfbLocation) => {
@@ -64,7 +63,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
                             .create(new RfbUser(null, this.registerAccount.login, runnersHomeLocation, null))
                             .subscribe(
                                 () => {
-                                    console.log('Runner was saved!');
                                 }
                             );
                     }
