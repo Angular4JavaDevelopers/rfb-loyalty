@@ -28,7 +28,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="rfb_user_id" type="bigint">
+            <column name="user_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
