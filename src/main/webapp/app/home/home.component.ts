@@ -7,6 +7,9 @@ import {RfbLocationService} from '../entities/rfb-location/rfb-location.service'
 import {ResponseWrapper} from '../shared/model/response-wrapper.model';
 import {RfbLocation} from '../entities/rfb-location/rfb-location.model';
 import {RfbEventService} from '../entities/rfb-event/rfb-event.service';
+import {AccountService} from '../shared/auth/account.service';
+import {RfbEvent} from '../entities/rfb-event/rfb-event.model';
+import {User} from '../shared/user/user.model';
 
 @Component({
     selector: 'jhi-home',
@@ -21,13 +24,16 @@ export class HomeComponent implements OnInit {
     modalRef: NgbModalRef;
     isSaving: boolean;
     locations: RfbLocation[];
+    todaysEvent: RfbEvent;
+    currentUser: User;
 
     constructor(
         private principal: Principal,
         private loginModalService: LoginModalService,
         private eventManager: JhiEventManager,
         private locationService: RfbLocationService,
-        private eventService: RfbEventService
+        private eventService: RfbEventService,
+        private accountService: AccountService
     ) {
     }
 
@@ -37,6 +43,21 @@ export class HomeComponent implements OnInit {
         });
         this.registerAuthenticationSuccess();
         this.loadLocations();
+
+        // get current user and if they have a role of organizer show todays event for their home location
+        this.accountService.get().subscribe( (user: User) => {
+            this.currentUser = user;
+            if (this.currentUser.authorities.indexOf('ROLE_ORGANIZER') !== -1) {
+                this.setTodaysEvent(this.currentUser.homeLocation);
+            }
+        });
+    }
+
+    setTodaysEvent(locationID: number) {
+        // reach out to our event service and find an event with todays date & this location id: homeLocationId;
+        this.eventService.findByLocation(locationID).subscribe( (rfbEvent: RfbEvent) => {
+            this.todaysEvent = rfbEvent;
+        });
     }
 
     registerAuthenticationSuccess() {

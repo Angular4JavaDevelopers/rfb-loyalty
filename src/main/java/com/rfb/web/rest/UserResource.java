@@ -158,7 +158,7 @@ public class UserResource {
     /**
      * GET /users/role : get all users by role
      *
-     * @param pageable the pgination information
+     * @param pageable the pagination information
      * @param role the role to query by
      * @return the ResponseEntity with status 200 (OK) and with body all users
      */

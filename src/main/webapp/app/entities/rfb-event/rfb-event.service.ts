@@ -51,8 +51,8 @@ export class RfbEventService {
         return this.http.delete(`${this.resourceUrl}/${id}`);
     }
 
-    findByLocation(locationId: number): Observable<ResponseWrapper> {
-        return this.http.get(`${this.resourceUrl}/byLocation/${locationId}`).map((res: Response) => {
+    findByLocation(locationId: number): Observable<RfbEvent> {
+        return this.http.get(`${this.resourceUrl}/location/${locationId}`).map((res: Response) => {
             return res.json();
         });
     }

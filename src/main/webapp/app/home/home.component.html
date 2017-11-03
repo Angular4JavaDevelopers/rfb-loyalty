@@ -7,13 +7,15 @@
     <div class="col-md-8">
         <h1 class="display-4">We Love 5k Running & Craft Brews</h1>
         <p><strong>Running for Brews</strong> celebrates our love for fitness and craft brews. We meet a local bars, run a 2 or 3.1 mile route, and then drink delicious craft brews at the finish. With over 10,000+ members nationwide, RFB is continuously gathering like-minded runners to socialize and have some fun. <a href="http://runningforbrews.com/aboutus.html">Find Out How It All Began</a></p>
-
         <div *jhiHasAnyAuthority="'ROLE_ORGANIZER'" class="card col-md-12">
-            <p>I have the organizer role</p>
+            <div *ngIf="todaysEvent">
+                <p><strong>Event Date:</strong> {{todaysEvent.eventDate}}</p>
+                <p><strong>Event Location:</strong> {{todaysEvent.rfbLocationDTO.locationName}}</p>
+                <p><strong>Event Code:</strong> {{todaysEvent.eventCode}}</p>
+            </div>
+            <p *ngIf="!todaysEvent">No events today! </p>
         </div>
-
         <br/>
-
         <div *jhiHasAnyAuthority="'ROLE_RUNNER'" class="card col-md-12">
             <div class="card-body">
                 <h4>Check-in for today's run!</h4>
