@@ -4,10 +4,8 @@ import com.rfb.domain.RfbEvent;
 import com.rfb.domain.RfbEventAttendance;
 import com.rfb.domain.RfbLocation;
 import com.rfb.domain.User;
-import com.rfb.repository.RfbEventAttendanceRepository;
-import com.rfb.repository.RfbEventRepository;
-import com.rfb.repository.RfbLocationRepository;
-import com.rfb.repository.UserRepository;
+import com.rfb.repository.*;
+import com.rfb.security.AuthoritiesConstants;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -15,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.UUID;
 
 /**
@@ -28,15 +27,17 @@ public class RfbBootstrap implements CommandLineRunner {
     private final RfbEventAttendanceRepository rfbEventAttendanceRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AuthorityRepository authorityRepository;
 
     public RfbBootstrap(RfbLocationRepository rfbLocationRepository, RfbEventRepository rfbEventRepository,
                         RfbEventAttendanceRepository rfbEventAttendanceRepository, UserRepository userRepository,
-                        PasswordEncoder passwordEncoder) {
+                        PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository) {
         this.rfbLocationRepository = rfbLocationRepository;
         this.rfbEventRepository = rfbEventRepository;
         this.rfbEventAttendanceRepository = rfbEventAttendanceRepository;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.authorityRepository = authorityRepository;
     }
     @Transactional
     @Override
@@ -55,7 +56,10 @@ public class RfbBootstrap implements CommandLineRunner {
         rfbUser.setFirstName("Johnny");
         rfbUser.setPassword(passwordEncoder.encode("admin"));
         rfbUser.setLogin("johnny");
+        rfbUser.setEmail("johnny@runningforbrews.com");
         rfbUser.setActivated(true);
+        rfbUser.addAuthority(authorityRepository.findOne("ROLE_RUNNER"));
+        rfbUser.addAuthority(authorityRepository.findOne("ROLE_ORGANIZER"));
         userRepository.save(rfbUser);
 
         //load data

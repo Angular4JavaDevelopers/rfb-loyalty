@@ -156,6 +156,21 @@ public class UserResource {
     }
 
     /**
+     * GET /users/role : get all users by role
+     *
+     * @param pageable the pgination information
+     * @param role the role to query by
+     * @return the ResponseEntity with status 200 (OK) and with body all users
+     */
+    @GetMapping("/users/authority/{role}")
+    @Timed
+    public ResponseEntity<List<UserDTO>> getAllUsersByAuthority(@ApiParam Pageable pageable, @PathVariable String role) {
+        final Page<UserDTO> page = userService.getAllManagedUsersByAuthority(pageable, role);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/users/${role}");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    /**
      * @return a string list of the all of the roles
      */
     @GetMapping("/users/authorities")

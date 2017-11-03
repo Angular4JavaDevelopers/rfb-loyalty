@@ -33,6 +33,12 @@ export class UserService {
             .map((res: Response) => this.convertResponse(res));
     }
 
+    findByAuthority(authority: string, req?: any): Observable<ResponseWrapper> {
+        const options = createRequestOption(req);
+        return this.http.get(this.resourceUrl + '/authority/' + authority, options)
+            .map((res: Response) => this.convertResponse(res));
+    }
+
     delete(login: string): Observable<Response> {
         return this.http.delete(`${this.resourceUrl}/${login}`);
     }

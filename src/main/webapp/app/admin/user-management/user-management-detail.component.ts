@@ -28,6 +28,7 @@ export class UserMgmtDetailComponent implements OnInit, OnDestroy {
     load(login) {
         this.userService.find(login).subscribe((user) => {
             this.user = user;
+            console.log(this.user[0]);
         });
     }
 

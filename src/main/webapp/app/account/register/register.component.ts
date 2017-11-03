@@ -6,8 +6,6 @@ import { LoginModalService } from '../../shared';
 import { RfbLocationService } from '../../entities/rfb-location/rfb-location.service';
 import { RfbLocation } from '../../entities/rfb-location/rfb-location.model';
 import { ResponseWrapper } from '../../shared/model/response-wrapper.model';
-import {RfbUserService} from '../../entities/rfb-user/rfb-user.service';
-import {RfbUser} from '../../entities/rfb-user/index';
 
 @Component({
     selector: 'jhi-register',
@@ -30,8 +28,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         private registerService: Register,
         private elementRef: ElementRef,
         private renderer: Renderer,
-        private locationService: RfbLocationService,
-        private runnersService: RfbUserService
+        private locationService: RfbLocationService
     ) {}
 
     ngOnInit() {
@@ -56,23 +53,9 @@ export class RegisterComponent implements OnInit, AfterViewInit {
             this.errorEmailExists = null;
             this.registerAccount.langKey = 'en';
             this.registerService.save(this.registerAccount).subscribe(() => {
-                console.log(this.registerAccount);
-                // after we successfully save a user we need to lay down a record in the runner table
-                this.locationService.find(parseInt(this.registerAccount.homeLocation, 10)).subscribe(
-                    (runnersHomeLocation: RfbLocation) => {
-                        this.runnersService
-                            .create(new RfbUser(null, this.registerAccount.login, runnersHomeLocation, null))
-                            .subscribe(
-                                () => {
-                                    console.log('Runner was saved!');
-                                }
-                            );
-                    }
-                );
                 this.success = true;
             }, (response) => this.processError(response));
         }
-
     }
 
     openLogin() {

@@ -31,10 +31,10 @@
             </select>
         </div>
         <div class="form-group">
-            <label class="form-control-label" for="field_rfbUser">User</label>
-            <select class="form-control" id="field_rfbUser" name="rfbUser" [(ngModel)]="rfbEventAttendance.rfbUserDTO.id" >
+            <label class="form-control-label" for="field_user">User</label>
+            <select class="form-control" id="field_user" name="user" [(ngModel)]="rfbEventAttendance.userDTO.id" >
                 <option [ngValue]="null"></option>
-                <option [ngValue]="rfbUserOption.id" *ngFor="let rfbUserOption of rfbusers; trackBy: trackRfbUserById">{{rfbUserOption.username}}</option>
+                <option [ngValue]="user.id" *ngFor="let user of users; trackBy: trackRfbUserById">{{user.login}}</option>
             </select>
         </div>
     </div>

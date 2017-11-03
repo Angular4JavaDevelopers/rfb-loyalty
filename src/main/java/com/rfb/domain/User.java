@@ -211,6 +211,10 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.authorities = authorities;
     }
 
+    public void addAuthority(Authority authority) {
+        this.authorities.add(authority);
+    }
+
     public Set<PersistentToken> getPersistentTokens() {
         return persistentTokens;
     }
