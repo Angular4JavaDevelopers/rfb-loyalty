@@ -10,6 +10,9 @@ import {RfbEventService} from '../entities/rfb-event/rfb-event.service';
 import {AccountService} from '../shared/auth/account.service';
 import {RfbEvent} from '../entities/rfb-event/rfb-event.model';
 import {User} from '../shared/user/user.model';
+import {RfbEventAttendance} from '../entities/rfb-event-attendance/rfb-event-attendance.model';
+import {RfbEventAttendanceService} from '../entities/rfb-event-attendance/rfb-event-attendance.service';
+import {DateFormatter} from '@angular/common/src/pipes/intl';
 
 @Component({
     selector: 'jhi-home',
@@ -26,6 +29,10 @@ export class HomeComponent implements OnInit {
     locations: RfbLocation[];
     todaysEvent: RfbEvent;
     currentUser: User;
+    model: any;
+    rfbEventAttendance: RfbEventAttendance;
+    errors: any = {invalidEventCode: ''};
+    checkedIn = false;
 
     constructor(
         private principal: Principal,
@@ -33,7 +40,8 @@ export class HomeComponent implements OnInit {
         private eventManager: JhiEventManager,
         private locationService: RfbLocationService,
         private eventService: RfbEventService,
-        private accountService: AccountService
+        private accountService: AccountService,
+        private rfbEventAttendanceService: RfbEventAttendanceService
     ) {
     }
 
@@ -43,12 +51,21 @@ export class HomeComponent implements OnInit {
         });
         this.registerAuthenticationSuccess();
         this.loadLocations();
+        this.model = {location: 0, eventCode: ''};
+        this.rfbEventAttendance = new RfbEventAttendance(null, new Date(), new RfbEvent(), new User());
 
         // get current user and if they have a role of organizer show todays event for their home location
         this.accountService.get().subscribe( (user: User) => {
             this.currentUser = user;
+            this.rfbEventAttendance.userDTO = user;
+            // we can set todays event for anyone who has a homeLocation. If they don't we should setTodays event
+            // when they change the location drop down || or just grab the event and then compare their event code to the events
             if (this.currentUser.authorities.indexOf('ROLE_ORGANIZER') !== -1) {
                 this.setTodaysEvent(this.currentUser.homeLocation);
+            }
+            if (this.currentUser.authorities.indexOf('ROLE_RUNNER') !== -1) {
+                // set home location
+                this.model.location = this.currentUser.homeLocation;
             }
         });
     }
@@ -89,11 +106,23 @@ export class HomeComponent implements OnInit {
     }
 
     checkIn() {
-        // get selected location
-        // get today's date
-        // get event code
-        // :: call event service and look for an event where those 3 items match
-        // :: if you find a match log an eventAttendance for this user (this.account) and that event
+        this.eventService.findByLocation(this.model.location).subscribe( (rfbEvent: RfbEvent) => {
+            const thisEvent = rfbEvent;
+            this.rfbEventAttendance.rfbEventDTO = rfbEvent;
+            if (thisEvent.eventCode === this.model.eventCode) {
+                // you are checked in
+                this.rfbEventAttendanceService.create(this.rfbEventAttendance).subscribe( (userCheckedIn: RfbEventAttendance) => {
+                    this.checkedIn = true;
+
+                    console.log('USER is checked in!');
+                });
+            } else {
+                this.errors.invalidEventCode = 'Wrong event code!';
+                console.log('There is either no event today or you have the wrong event code!');
+
+            }
+
+        });
     }
 
     clear() {}

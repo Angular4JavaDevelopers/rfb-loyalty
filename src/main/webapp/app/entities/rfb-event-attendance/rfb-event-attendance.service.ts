@@ -16,8 +16,7 @@ export class RfbEventAttendanceService {
     constructor(private http: Http, private dateUtils: JhiDateUtils) { }
 
     create(rfbEventAttendance: RfbEventAttendance): Observable<RfbEventAttendance> {
-        const copy = this.convert(rfbEventAttendance);
-        return this.http.post(this.resourceUrl, copy).map((res: Response) => {
+        return this.http.post(this.resourceUrl, rfbEventAttendance).map((res: Response) => {
             const jsonResponse = res.json();
             this.convertItemFromServer(jsonResponse);
             return jsonResponse;
@@ -60,14 +59,12 @@ export class RfbEventAttendanceService {
     }
 
     private convertItemFromServer(entity: any) {
-        entity.attendanceDate = this.dateUtils
-            .convertLocalDateFromServer(entity.attendanceDate);
+        entity.attendanceDate = this.dateUtils.convertLocalDateFromServer(entity.attendanceDate);
     }
 
     private convert(rfbEventAttendance: RfbEventAttendance): RfbEventAttendance {
         const copy: RfbEventAttendance = Object.assign({}, rfbEventAttendance);
-        copy.attendanceDate = this.dateUtils
-            .convertLocalDateToServer(rfbEventAttendance.attendanceDate);
+        copy.attendanceDate = this.dateUtils.convertLocalDateToServer(rfbEventAttendance.attendanceDate);
         return copy;
     }
 }

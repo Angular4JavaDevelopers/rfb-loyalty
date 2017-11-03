@@ -143,6 +143,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/rfb-events/**").hasAnyAuthority(AuthoritiesConstants.ADMIN,AuthoritiesConstants.ORGANIZER)
             .antMatchers(HttpMethod.GET,"/api/rfb-locations/**").permitAll()
             .antMatchers("/api/rfb-locations/**").hasAuthority(AuthoritiesConstants.ADMIN)
+            .antMatchers(HttpMethod.POST,"/api/rfb-event-attendances").hasAuthority(AuthoritiesConstants.RUNNER)
             .antMatchers("/api/rfb-event-attendances/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers(HttpMethod.POST,"/api/rfb-users/**").permitAll()
             .antMatchers("/api/rfb-users/**").hasAuthority(AuthoritiesConstants.ADMIN)
