@@ -162,7 +162,7 @@ public class UserResource {
      * @param role the role to query by
      * @return the ResponseEntity with status 200 (OK) and with body all users
      */
-    @GetMapping("/users/{role}")
+    @GetMapping("/users/authority/{role}")
     @Timed
     public ResponseEntity<List<UserDTO>> getAllUsersByAuthority(@ApiParam Pageable pageable, @PathVariable String role) {
         final Page<UserDTO> page = userService.getAllManagedUsersByAuthority(pageable, role);

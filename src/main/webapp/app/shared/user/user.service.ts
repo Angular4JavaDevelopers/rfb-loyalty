@@ -35,7 +35,7 @@ export class UserService {
 
     findByAuthority(authority: string, req?: any): Observable<ResponseWrapper> {
         const options = createRequestOption(req);
-        return this.http.get(this.resourceUrl + '/' + authority, options)
+        return this.http.get(this.resourceUrl + '/authority/' + authority, options)
             .map((res: Response) => this.convertResponse(res));
     }
 
