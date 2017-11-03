@@ -1,8 +1,8 @@
 package com.rfb.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-
 import com.rfb.domain.PersistentToken;
+import com.rfb.domain.RfbLocation;
 import com.rfb.domain.User;
 import com.rfb.repository.PersistentTokenRepository;
 import com.rfb.repository.RfbLocationRepository;
@@ -11,14 +11,12 @@ import com.rfb.security.SecurityUtils;
 import com.rfb.service.MailService;
 import com.rfb.service.UserService;
 import com.rfb.service.dto.UserDTO;
+import com.rfb.web.rest.util.HeaderUtil;
 import com.rfb.web.rest.vm.KeyAndPasswordVM;
 import com.rfb.web.rest.vm.ManagedUserVM;
-import com.rfb.web.rest.util.HeaderUtil;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,7 +27,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * REST controller for managing the current user's account.
@@ -83,12 +82,18 @@ public class AccountResource {
             .orElseGet(() -> userRepository.findOneByEmail(managedUserVM.getEmail())
                 .map(user -> new ResponseEntity<>("email address already in use", textPlainHeaders, HttpStatus.BAD_REQUEST))
                 .orElseGet(() -> {
+                    RfbLocation homeLocation = null;
+
+                    if(managedUserVM.getHomeLocation() != null){
+                       homeLocation = locationRepository.findOne(managedUserVM.getHomeLocation());
+                    }
+
                     User user = userService
                         .createUser(managedUserVM.getLogin(), managedUserVM.getPassword(),
                             managedUserVM.getFirstName(), managedUserVM.getLastName(),
                             managedUserVM.getEmail().toLowerCase(), managedUserVM.getImageUrl(),
                             managedUserVM.getLangKey(),
-                            locationRepository.findOne(managedUserVM.getHomeLocation()));
+                            homeLocation);
 
                     mailService.sendActivationEmail(user);
                     return new ResponseEntity<>(HttpStatus.CREATED);

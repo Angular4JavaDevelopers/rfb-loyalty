@@ -28,17 +28,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.time.Instant;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -159,6 +157,7 @@ public class UserResourceIntTest {
             null,
             null,
             null,
+            null,
             authorities);
 
         restUserMockMvc.perform(post("/api/users")
@@ -199,6 +198,7 @@ public class UserResourceIntTest {
             null,
             null,
             null,
+            null,
             authorities);
 
         // An entity with an existing ID cannot be created, so this API call must fail
@@ -235,6 +235,7 @@ public class UserResourceIntTest {
             null,
             null,
             null,
+            null,
             authorities);
 
         // Create the User
@@ -267,6 +268,7 @@ public class UserResourceIntTest {
             true,
             DEFAULT_IMAGEURL,
             DEFAULT_LANGKEY,
+            null,
             null,
             null,
             null,
@@ -354,6 +356,7 @@ public class UserResourceIntTest {
             updatedUser.getCreatedDate(),
             updatedUser.getLastModifiedBy(),
             updatedUser.getLastModifiedDate(),
+            updatedUser.getHomeLocation() != null ? updatedUser.getHomeLocation().getId() : null,
             authorities);
 
         restUserMockMvc.perform(put("/api/users")
@@ -398,6 +401,7 @@ public class UserResourceIntTest {
             updatedUser.getCreatedDate(),
             updatedUser.getLastModifiedBy(),
             updatedUser.getLastModifiedDate(),
+            updatedUser.getHomeLocation() != null ? updatedUser.getHomeLocation().getId() : null,
             authorities);
 
         restUserMockMvc.perform(put("/api/users")
@@ -453,6 +457,7 @@ public class UserResourceIntTest {
             updatedUser.getCreatedDate(),
             updatedUser.getLastModifiedBy(),
             updatedUser.getLastModifiedDate(),
+            updatedUser.getHomeLocation() != null ? updatedUser.getHomeLocation().getId() : null,
             authorities);
 
         restUserMockMvc.perform(put("/api/users")
@@ -497,6 +502,7 @@ public class UserResourceIntTest {
             updatedUser.getCreatedDate(),
             updatedUser.getLastModifiedBy(),
             updatedUser.getLastModifiedDate(),
+            updatedUser.getHomeLocation() != null ? updatedUser.getHomeLocation().getId() : null,
             authorities);
 
         restUserMockMvc.perform(put("/api/users")
@@ -569,6 +575,7 @@ public class UserResourceIntTest {
             DEFAULT_LOGIN,
             null,
             DEFAULT_LOGIN,
+            null,
             null,
             Stream.of(AuthoritiesConstants.RUNNER).collect(Collectors.toSet()));
         User user = userMapper.userDTOToUser(userDTO);
