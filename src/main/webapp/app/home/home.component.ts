@@ -12,7 +12,6 @@ import {RfbEvent} from '../entities/rfb-event/rfb-event.model';
 import {User} from '../shared/user/user.model';
 import {RfbEventAttendance} from '../entities/rfb-event-attendance/rfb-event-attendance.model';
 import {RfbEventAttendanceService} from '../entities/rfb-event-attendance/rfb-event-attendance.service';
-import {DateFormatter} from '@angular/common/src/pipes/intl';
 
 @Component({
     selector: 'jhi-home',
@@ -113,13 +112,9 @@ export class HomeComponent implements OnInit {
                 // you are checked in
                 this.rfbEventAttendanceService.create(this.rfbEventAttendance).subscribe( (userCheckedIn: RfbEventAttendance) => {
                     this.checkedIn = true;
-
-                    console.log('USER is checked in!');
                 });
             } else {
                 this.errors.invalidEventCode = 'Wrong event code!';
-                console.log('There is either no event today or you have the wrong event code!');
-
             }
 
         });
