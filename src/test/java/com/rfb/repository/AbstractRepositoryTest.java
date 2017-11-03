@@ -22,4 +22,7 @@ abstract class AbstractRepositoryTest {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Autowired
+    AuthorityRepository authorityRepository;
+
 }

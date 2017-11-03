@@ -6,6 +6,7 @@ import com.rfb.domain.PersistentToken;
 import com.rfb.domain.User;
 import com.rfb.repository.AuthorityRepository;
 import com.rfb.repository.PersistentTokenRepository;
+import com.rfb.repository.RfbLocationRepository;
 import com.rfb.repository.UserRepository;
 import com.rfb.security.AuthoritiesConstants;
 import com.rfb.service.MailService;
@@ -32,16 +33,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
@@ -71,6 +73,9 @@ public class AccountResourceIntTest {
     @Autowired
     private HttpMessageConverter[] httpMessageConverters;
 
+    @Autowired
+    RfbLocationRepository rfbLocationRepository;
+
     @Mock
     private UserService mockUserService;
 
@@ -87,10 +92,10 @@ public class AccountResourceIntTest {
         doNothing().when(mockMailService).sendActivationEmail(anyObject());
 
         AccountResource accountResource =
-            new AccountResource(userRepository, userService, mockMailService, persistentTokenRepository);
+            new AccountResource(userRepository, userService, mockMailService, persistentTokenRepository, rfbLocationRepository);
 
         AccountResource accountUserMockResource =
-            new AccountResource(userRepository, mockUserService, mockMailService, persistentTokenRepository);
+            new AccountResource(userRepository, mockUserService, mockMailService, persistentTokenRepository, rfbLocationRepository);
 
         this.restMvc = MockMvcBuilders.standaloneSetup(accountResource)
             .setMessageConverters(httpMessageConverters)
@@ -174,6 +179,7 @@ public class AccountResourceIntTest {
             null,                   // createdDate
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
+            null,
             new HashSet<>(Collections.singletonList(AuthoritiesConstants.RUNNER)));
 
         restMvc.perform(
@@ -203,6 +209,7 @@ public class AccountResourceIntTest {
             null,                   // createdDate
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
+            null,
             new HashSet<>(Collections.singletonList(AuthoritiesConstants.RUNNER)));
 
         restUserMockMvc.perform(
@@ -232,6 +239,7 @@ public class AccountResourceIntTest {
             null,                   // createdDate
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
+            null,
             new HashSet<>(Collections.singletonList(AuthoritiesConstants.RUNNER)));
 
         restUserMockMvc.perform(
@@ -261,6 +269,7 @@ public class AccountResourceIntTest {
             null,                   // createdDate
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
+            null,
             new HashSet<>(Collections.singletonList(AuthoritiesConstants.RUNNER)));
 
         restUserMockMvc.perform(
@@ -290,6 +299,7 @@ public class AccountResourceIntTest {
             null,                   // createdDate
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
+            null,
             new HashSet<>(Collections.singletonList(AuthoritiesConstants.RUNNER)));
 
         restUserMockMvc.perform(
@@ -320,11 +330,14 @@ public class AccountResourceIntTest {
             null,                   // createdDate
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
+            null,
             new HashSet<>(Collections.singletonList(AuthoritiesConstants.RUNNER)));
 
         // Duplicate login, different email
         ManagedUserVM duplicatedUser = new ManagedUserVM(validUser.getId(), validUser.getLogin(), validUser.getPassword(), validUser.getFirstName(), validUser.getLastName(),
-            "alicejr@example.com", true, validUser.getImageUrl(), validUser.getLangKey(), validUser.getCreatedBy(), validUser.getCreatedDate(), validUser.getLastModifiedBy(), validUser.getLastModifiedDate(), validUser.getAuthorities());
+            "alicejr@example.com", true, validUser.getImageUrl(), validUser.getLangKey(), validUser.getCreatedBy(),
+            validUser.getCreatedDate(), validUser.getLastModifiedBy(), validUser.getLastModifiedDate(), validUser.getHomeLocation(),
+            validUser.getAuthorities());
 
         // Good user
         restMvc.perform(
@@ -362,11 +375,13 @@ public class AccountResourceIntTest {
             null,                   // createdDate
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
+            null,
             new HashSet<>(Collections.singletonList(AuthoritiesConstants.RUNNER)));
 
         // Duplicate email, different login
         ManagedUserVM duplicatedUser = new ManagedUserVM(validUser.getId(), "johnjr", validUser.getPassword(), validUser.getLogin(), validUser.getLastName(),
-            validUser.getEmail(), true, validUser.getImageUrl(), validUser.getLangKey(), validUser.getCreatedBy(), validUser.getCreatedDate(), validUser.getLastModifiedBy(), validUser.getLastModifiedDate(), validUser.getAuthorities());
+            validUser.getEmail(), true, validUser.getImageUrl(), validUser.getLangKey(), validUser.getCreatedBy(), validUser.getCreatedDate(),
+            validUser.getLastModifiedBy(), validUser.getLastModifiedDate(), validUser.getHomeLocation(), validUser.getAuthorities());
 
         // Good user
         restMvc.perform(
@@ -403,6 +418,7 @@ public class AccountResourceIntTest {
             null,                   // createdDate
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
+            null,
             new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)));
 
         restMvc.perform(
@@ -469,6 +485,7 @@ public class AccountResourceIntTest {
             null,                   // createdDate
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
+            null,
             new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN))
         );
 
@@ -514,6 +531,7 @@ public class AccountResourceIntTest {
             null,                   // createdDate
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
+            null,
             new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN))
         );
 
@@ -559,6 +577,7 @@ public class AccountResourceIntTest {
             null,                   // createdDate
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
+            null,
             new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN))
         );
 
@@ -597,6 +616,7 @@ public class AccountResourceIntTest {
             null,                   // createdDate
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
+            null,
             new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN))
         );
 
