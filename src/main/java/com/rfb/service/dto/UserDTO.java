@@ -64,7 +64,7 @@ public class UserDTO {
         this(user.getId(), user.getLogin(), user.getFirstName(), user.getLastName(),
             user.getEmail(), user.getActivated(), user.getImageUrl(), user.getLangKey(),
             user.getCreatedBy(), user.getCreatedDate(), user.getLastModifiedBy(), user.getLastModifiedDate(),
-            user.getHomeLocation().getId(),
+            (user.getHomeLocation() != null) ? user.getHomeLocation().getId() : null,
             user.getAuthorities().stream().map(Authority::getName)
                 .collect(Collectors.toSet()));
     }

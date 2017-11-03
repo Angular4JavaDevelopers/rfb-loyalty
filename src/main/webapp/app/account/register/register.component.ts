@@ -6,8 +6,6 @@ import { LoginModalService } from '../../shared';
 import { RfbLocationService } from '../../entities/rfb-location/rfb-location.service';
 import { RfbLocation } from '../../entities/rfb-location/rfb-location.model';
 import { ResponseWrapper } from '../../shared/model/response-wrapper.model';
-import {RfbUserService} from '../../entities/rfb-user/rfb-user.service';
-import {RfbUser} from '../../entities/rfb-user/index';
 
 @Component({
     selector: 'jhi-register',
@@ -30,8 +28,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         private registerService: Register,
         private elementRef: ElementRef,
         private renderer: Renderer,
-        private locationService: RfbLocationService,
-        private runnersService: RfbUserService
+        private locationService: RfbLocationService
     ) {}
 
     ngOnInit() {

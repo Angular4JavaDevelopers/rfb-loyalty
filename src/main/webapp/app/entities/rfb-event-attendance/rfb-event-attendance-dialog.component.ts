@@ -10,7 +10,6 @@ import {RfbEventAttendance} from './rfb-event-attendance.model';
 import {RfbEventAttendancePopupService} from './rfb-event-attendance-popup.service';
 import {RfbEventAttendanceService} from './rfb-event-attendance.service';
 import {RfbEvent, RfbEventService} from '../rfb-event';
-import {RfbUserService} from '../rfb-user';
 import {ResponseWrapper} from '../../shared';
 import {User} from '../../shared/user/user.model';
 import {UserService} from '../../shared/user/user.service';
