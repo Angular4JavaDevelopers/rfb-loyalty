@@ -5,6 +5,7 @@ import com.codahale.metrics.annotation.Timed;
 import com.rfb.domain.PersistentToken;
 import com.rfb.domain.User;
 import com.rfb.repository.PersistentTokenRepository;
+import com.rfb.repository.RfbLocationRepository;
 import com.rfb.repository.UserRepository;
 import com.rfb.security.SecurityUtils;
 import com.rfb.service.MailService;
@@ -17,6 +18,7 @@ import com.rfb.web.rest.util.HeaderUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -46,15 +48,18 @@ public class AccountResource {
 
     private final PersistentTokenRepository persistentTokenRepository;
 
+    private final RfbLocationRepository locationRepository;
+
     private static final String CHECK_ERROR_MESSAGE = "Incorrect password";
 
     public AccountResource(UserRepository userRepository, UserService userService,
-            MailService mailService, PersistentTokenRepository persistentTokenRepository) {
+            MailService mailService, PersistentTokenRepository persistentTokenRepository, RfbLocationRepository locationRepository) {
 
         this.userRepository = userRepository;
         this.userService = userService;
         this.mailService = mailService;
         this.persistentTokenRepository = persistentTokenRepository;
+        this.locationRepository = locationRepository;
     }
 
     /**
@@ -82,7 +87,8 @@ public class AccountResource {
                         .createUser(managedUserVM.getLogin(), managedUserVM.getPassword(),
                             managedUserVM.getFirstName(), managedUserVM.getLastName(),
                             managedUserVM.getEmail().toLowerCase(), managedUserVM.getImageUrl(),
-                            managedUserVM.getLangKey());
+                            managedUserVM.getLangKey(),
+                            locationRepository.findOne(managedUserVM.getHomeLocation()));
 
                     mailService.sendActivationEmail(user);
                     return new ResponseEntity<>(HttpStatus.CREATED);

@@ -1,6 +1,7 @@
 package com.rfb.service;
 
 import com.rfb.domain.Authority;
+import com.rfb.domain.RfbLocation;
 import com.rfb.domain.User;
 import com.rfb.repository.AuthorityRepository;
 import com.rfb.repository.PersistentTokenRepository;
@@ -96,7 +97,7 @@ public class UserService {
     }
 
     public User createUser(String login, String password, String firstName, String lastName, String email,
-        String imageUrl, String langKey) {
+                           String imageUrl, String langKey, RfbLocation location) {
 
         User newUser = new User();
         Authority authority = authorityRepository.findOne(AuthoritiesConstants.RUNNER);
@@ -116,6 +117,7 @@ public class UserService {
         newUser.setActivationKey(RandomUtil.generateActivationKey());
         authorities.add(authority);
         newUser.setAuthorities(authorities);
+        newUser.setHomeLocation(location);
         userRepository.save(newUser);
         log.debug("Created Information for User: {}", newUser);
         return newUser;

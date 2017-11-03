@@ -3,6 +3,7 @@ package com.rfb.service.dto;
 import com.rfb.config.Constants;
 
 import com.rfb.domain.Authority;
+import com.rfb.domain.RfbLocation;
 import com.rfb.domain.User;
 
 import org.hibernate.validator.constraints.Email;
@@ -53,6 +54,8 @@ public class UserDTO {
 
     private Set<String> authorities;
 
+    private Long homeLocation;
+
     public UserDTO() {
         // Empty constructor needed for Jackson.
     }
@@ -61,6 +64,7 @@ public class UserDTO {
         this(user.getId(), user.getLogin(), user.getFirstName(), user.getLastName(),
             user.getEmail(), user.getActivated(), user.getImageUrl(), user.getLangKey(),
             user.getCreatedBy(), user.getCreatedDate(), user.getLastModifiedBy(), user.getLastModifiedDate(),
+            user.getHomeLocation().getId(),
             user.getAuthorities().stream().map(Authority::getName)
                 .collect(Collectors.toSet()));
     }
@@ -68,6 +72,7 @@ public class UserDTO {
     public UserDTO(Long id, String login, String firstName, String lastName,
         String email, boolean activated, String imageUrl, String langKey,
         String createdBy, Instant createdDate, String lastModifiedBy, Instant lastModifiedDate,
+        Long homeLocation,
         Set<String> authorities) {
 
         this.id = id;
@@ -82,6 +87,7 @@ public class UserDTO {
         this.createdDate = createdDate;
         this.lastModifiedBy = lastModifiedBy;
         this.lastModifiedDate = lastModifiedDate;
+        this.homeLocation = homeLocation;
         this.authorities = authorities;
     }
 
@@ -143,6 +149,14 @@ public class UserDTO {
 
     public void setLastModifiedDate(Instant lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
+    }
+
+    public Long getHomeLocation() {
+        return homeLocation;
+    }
+
+    public void setHomeLocation(Long homeLocation) {
+        this.homeLocation = homeLocation;
     }
 
     public Set<String> getAuthorities() {
