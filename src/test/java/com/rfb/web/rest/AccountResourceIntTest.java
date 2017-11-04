@@ -485,7 +485,7 @@ public class AccountResourceIntTest {
             null,                   // createdDate
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
-            null,
+            1L,
             new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN))
         );
 
@@ -616,7 +616,7 @@ public class AccountResourceIntTest {
             null,                   // createdDate
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
-            null,
+            1L,
             new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN))
         );
 
