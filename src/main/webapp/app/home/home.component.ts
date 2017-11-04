@@ -45,28 +45,32 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.principal.identity().then((account) => {
-            this.account = account;
-        });
-        this.registerAuthenticationSuccess();
-        this.loadLocations();
         this.model = {location: 0, eventCode: ''};
         this.rfbEventAttendance = new RfbEventAttendance(null, new Date(), new RfbEvent(), new User());
+        // for whatever reason this.principal.isAuthenticated() never returns true. This is my way of making
+        // sure this isn't run when nobody is logged in.
+        if (this.principal.hasAnyAuthorityDirect(['ROLE_RUNNER', 'ROLE_ORGANIZER', 'ROLE_ADMIN'])) {
+            this.principal.identity().then((account) => {
+                this.account = account;
+                this.afterUserAccountSetup(account);
+            });
+        }
+        this.registerAuthenticationSuccess();
+        this.loadLocations();
+    }
 
-        // get current user and if they have a role of organizer show todays event for their home location
-        this.accountService.get().subscribe( (user: User) => {
-            this.currentUser = user;
-            this.rfbEventAttendance.userDTO = user;
-            // we can set todays event for anyone who has a homeLocation. If they don't we should setTodays event
-            // when they change the location drop down || or just grab the event and then compare their event code to the events
-            if (this.currentUser.authorities.indexOf('ROLE_ORGANIZER') !== -1) {
-                this.setTodaysEvent(this.currentUser.homeLocation);
-            }
-            if (this.currentUser.authorities.indexOf('ROLE_RUNNER') !== -1) {
-                // set home location
-                this.model.location = this.currentUser.homeLocation;
-            }
-        });
+    afterUserAccountSetup(user: Account) {
+        this.currentUser = user;
+        this.rfbEventAttendance.userDTO = user;
+        // we can set todays event for anyone who has a homeLocation. If they don't we should setTodays event
+        // when they change the location drop down || or just grab the event and then compare their event code to the events
+        if (this.currentUser.authorities.indexOf('ROLE_ORGANIZER') !== -1) {
+            this.setTodaysEvent(this.currentUser.homeLocation);
+        }
+        if (this.currentUser.authorities.indexOf('ROLE_RUNNER') !== -1) {
+            // set home location
+            this.model.location = this.currentUser.homeLocation;
+        }
     }
 
     setTodaysEvent(locationID: number) {
@@ -80,6 +84,7 @@ export class HomeComponent implements OnInit {
         this.eventManager.subscribe('authenticationSuccess', (message) => {
             this.principal.identity().then((account) => {
                 this.account = account;
+                this.afterUserAccountSetup(account);
             });
         });
     }
