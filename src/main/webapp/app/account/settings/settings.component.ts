@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Principal, AccountService } from '../../shared';
+import { Principal, AccountService, ResponseWrapper } from '../../shared';
+import {RfbLocation} from '../../entities/rfb-location/rfb-location.model';
+import {RfbLocationService} from '../../entities/rfb-location/rfb-location.service';
 
 @Component({
     selector: 'jhi-settings',
@@ -11,10 +13,12 @@ export class SettingsComponent implements OnInit {
     success: string;
     settingsAccount: any;
     languages: any[];
+    locations: RfbLocation[];
 
     constructor(
         private account: AccountService,
-        private principal: Principal
+        private principal: Principal,
+        private locationService: RfbLocationService
     ) {
     }
 
@@ -22,6 +26,7 @@ export class SettingsComponent implements OnInit {
         this.principal.identity().then((account) => {
             this.settingsAccount = this.copyAccount(account);
         });
+        this.loadLocations();
     }
 
     save() {
@@ -45,7 +50,20 @@ export class SettingsComponent implements OnInit {
             langKey: account.langKey,
             lastName: account.lastName,
             login: account.login,
-            imageUrl: account.imageUrl
+            imageUrl: account.imageUrl,
+            homeLocation: account.homeLocation
         };
+    }
+
+    loadLocations() {
+        this.locationService.query({
+            page: 0,
+            size: 100,
+            sort: ['locationName', 'ASC']}).subscribe(
+            (res: ResponseWrapper) => {
+                this.locations = res.json;
+            },
+            (res: ResponseWrapper) => { console.log(res) }
+        );
     }
 }
