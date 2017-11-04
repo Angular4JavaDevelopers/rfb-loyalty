@@ -24,7 +24,7 @@
                 <h4>Check-in for today's run!</h4>
                 <p>Please use the form to check in to today's event. If you don't know the code please ask your organizer. </p>
                 <div *ngIf="errors.invalidEventCode" class="alert alert-danger" role="alert">
-                    There is either no run today for this location or you have entered an incorrect event code. Please try again.
+                    {{errors.invalidEventCode}}
                 </div>
                 <form name="checkinForm" role="form" novalidate (ngSubmit)="checkIn()" #checkinForm="ngForm">
                     <div class="modal-body">

@@ -114,7 +114,7 @@ export class HomeComponent implements OnInit {
                     this.checkedIn = true;
                 });
             } else {
-                this.errors.invalidEventCode = 'Wrong event code!';
+                this.errors.invalidEventCode = 'There is either no run today for this location or you have entered an incorrect event code. Please try again.';
             }
 
         });

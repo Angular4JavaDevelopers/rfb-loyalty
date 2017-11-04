@@ -128,7 +128,7 @@ public class RfbEventResource {
     /**
      * GET  /rfb-events/location/id : get a single event for the location and today
      *
-     * @param homeLocationId the location of the event
+     * @param locationID the location of the event
      * @return the ResponseEntity with status 200 (OK) and the list of rfbEvents in body
      */
     @GetMapping("/rfb-events/location/{locationID}")

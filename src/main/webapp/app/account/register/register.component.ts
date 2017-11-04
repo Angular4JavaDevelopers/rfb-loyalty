@@ -71,8 +71,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
             (res: ResponseWrapper) => {
                 this.locations = res.json;
             },
-            (res: ResponseWrapper) => {
-            }
+            (res: ResponseWrapper) => { console.log(res) }
         );
     }
 
