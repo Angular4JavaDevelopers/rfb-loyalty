@@ -38,7 +38,7 @@ defaultTasks 'bootRun'
 apply plugin: 'net.researchgate.release'
 
 group = 'com.rfb'
-
+version = ${version}
 
 description = ''
 
