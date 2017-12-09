@@ -52,7 +52,6 @@
                         <option [value]="null" [selected]="">Select Home Location</option>
                         <option *ngFor="let location of locations" [value]="location.id">{{location.locationName}}</option>
                     </select>
-                    <!--<small class="form-text text-danger" *ngIf="homeLocation.errors">Select a location dummy</small>-->
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="email">Email</label>

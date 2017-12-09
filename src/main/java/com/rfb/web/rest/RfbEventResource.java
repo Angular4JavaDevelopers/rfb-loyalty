@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -122,6 +123,20 @@ public class RfbEventResource {
         log.debug("REST request to delete RfbEvent : {}", id);
         rfbEventService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    /**
+     * GET  /rfb-events/location/id : get a single event for the location and today
+     *
+     * @param locationID the location of the event
+     * @return the ResponseEntity with status 200 (OK) and the list of rfbEvents in body
+     */
+    @GetMapping("/rfb-events/location/{locationID}")
+    @Timed
+    public ResponseEntity<RfbEventDTO> getTodaysEventByLocation(@PathVariable Long locationID) {
+        log.debug("REST request to get a single event by location and today's date.");
+        RfbEventDTO event = rfbEventService.findByTodayAndLocation(locationID);
+        return new ResponseEntity<RfbEventDTO>(event,null,HttpStatus.OK);
     }
 
 }

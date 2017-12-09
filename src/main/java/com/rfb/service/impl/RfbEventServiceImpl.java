@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -92,4 +93,10 @@ public class RfbEventServiceImpl implements RfbEventService{
         rfbEventRepository.delete(id);
     }
 
+    @Override
+    public RfbEventDTO findByTodayAndLocation(Long locationID) {
+        RfbLocation location = locationRepository.findOne(locationID);
+        RfbEvent rfbEvent = rfbEventRepository.findByEventDateEqualsAndRfbLocationEquals(LocalDate.now(),location);
+        return rfbEventMapper.toDto(rfbEvent);
+    }
 }

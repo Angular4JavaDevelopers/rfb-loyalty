@@ -7,38 +7,43 @@
     <div class="col-md-8">
         <h1 class="display-4">We Love 5k Running & Craft Brews</h1>
         <p><strong>Running for Brews</strong> celebrates our love for fitness and craft brews. We meet a local bars, run a 2 or 3.1 mile route, and then drink delicious craft brews at the finish. With over 10,000+ members nationwide, RFB is continuously gathering like-minded runners to socialize and have some fun. <a href="http://runningforbrews.com/aboutus.html">Find Out How It All Began</a></p>
-
         <div *jhiHasAnyAuthority="'ROLE_ORGANIZER'" class="card col-md-12">
-            <p>I have the organizer role</p>
+            <div *ngIf="todaysEvent">
+                <p><strong>Event Date:</strong> {{todaysEvent.eventDate}}</p>
+                <p><strong>Event Location:</strong> {{todaysEvent.rfbLocationDTO.locationName}}</p>
+                <p><strong>Event Code:</strong> {{todaysEvent.eventCode}}</p>
+            </div>
+            <p *ngIf="!todaysEvent">No events today! </p>
         </div>
-
         <br/>
-
         <div *jhiHasAnyAuthority="'ROLE_RUNNER'" class="card col-md-12">
-            <div class="card-body">
+            <div *ngIf="checkedIn" class="alert alert-success" role="alert" style="padding-top: 10px;">
+                You are checked in for today's run. Thank you!
+            </div>
+            <div *ngIf="!checkedIn" class="card-body">
                 <h4>Check-in for today's run!</h4>
                 <p>Please use the form to check in to today's event. If you don't know the code please ask your organizer. </p>
-                <form name="editForm" role="form" novalidate (ngSubmit)="checkIn()" #editForm="ngForm">
+                <div *ngIf="errors.invalidEventCode" class="alert alert-danger" role="alert">
+                    {{errors.invalidEventCode}}
+                </div>
+                <form name="checkinForm" role="form" novalidate (ngSubmit)="checkIn()" #checkinForm="ngForm">
                     <div class="modal-body">
                         <jhi-alert-error></jhi-alert-error>
                         <div class="form-group">
                             <label class="form-control-label" for="field_location">Location</label>
-                            <select class="form-control" id="field_location" name="location" #location>
+                            <select class="form-control" id="field_location" name="location" [(ngModel)]="model.location" #location="ngModel" required>
                                 <option [ngValue]="null"></option>
                                 <option [ngValue]="location.id" *ngFor="let location of locations">{{location.locationName}}</option>
                             </select>
-                            <small><a href="/" (click)="setHomeLocation()">SET AS HOME LOCATION</a></small>
+                            <small *ngIf="!model.location"><a href="/#/settings">SET HOME LOCATION</a></small>
                         </div>
                         <div class="form-group">
                             <label class="form-control-label" for="field_eventCode">Event Code</label>
-                            <input type="text" class="form-control" name="eventCode" id="field_eventCode" #eventCode />
+                            <input type="text" class="form-control" name="eventCode" id="field_eventCode" [(ngModel)]="model.eventCode" #eventCode="ngModel" required/>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
-                            <span class="fa fa-ban"></span>&nbsp;<span>Cancel</span>
-                        </button>
-                        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                        <button type="submit" [disabled]="checkinForm.form.invalid || isSaving" class="btn btn-primary">
                             <span class="fa fa-save"></span>&nbsp;<span>Save</span>
                         </button>
                     </div>

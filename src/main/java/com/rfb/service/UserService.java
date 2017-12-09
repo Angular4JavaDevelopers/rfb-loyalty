@@ -6,6 +6,7 @@ import com.rfb.domain.User;
 import com.rfb.repository.AuthorityRepository;
 import com.rfb.repository.PersistentTokenRepository;
 import com.rfb.config.Constants;
+import com.rfb.repository.RfbLocationRepository;
 import com.rfb.repository.UserRepository;
 import com.rfb.security.AuthoritiesConstants;
 import com.rfb.security.SecurityUtils;
@@ -49,13 +50,16 @@ public class UserService {
 
     private final CacheManager cacheManager;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, SocialService socialService, PersistentTokenRepository persistentTokenRepository, AuthorityRepository authorityRepository, CacheManager cacheManager) {
+    private final RfbLocationRepository locationRepository;
+
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, SocialService socialService, PersistentTokenRepository persistentTokenRepository, AuthorityRepository authorityRepository, CacheManager cacheManager, RfbLocationRepository locationRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.socialService = socialService;
         this.persistentTokenRepository = persistentTokenRepository;
         this.authorityRepository = authorityRepository;
         this.cacheManager = cacheManager;
+        this.locationRepository = locationRepository;
     }
 
     public Optional<User> activateRegistration(String key) {
@@ -161,13 +165,14 @@ public class UserService {
      * @param langKey language key
      * @param imageUrl image URL of user
      */
-    public void updateUser(String firstName, String lastName, String email, String langKey, String imageUrl) {
+    public void updateUser(String firstName, String lastName, String email, String langKey, String imageUrl, Long locationID) {
         userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).ifPresent(user -> {
             user.setFirstName(firstName);
             user.setLastName(lastName);
             user.setEmail(email);
             user.setLangKey(langKey);
             user.setImageUrl(imageUrl);
+            user.setHomeLocation( locationRepository.findOne(locationID) );
             cacheManager.getCache("users").evict(user.getLogin());
             log.debug("Changed Information for User: {}", user);
         });
