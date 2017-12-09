@@ -10,6 +10,7 @@ buildscript {
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${spring_boot_version}"
         classpath "org.springframework.build.gradle:propdeps-plugin:0.0.7"
+        classpath 'net.researchgate:gradle-release:2.6.0'
         //jhipster-needle-gradle-buildscript-dependency - JHipster will add additional gradle build script plugins here
     }
 }
@@ -34,6 +35,7 @@ apply plugin: 'com.moowork.node'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'idea'
 defaultTasks 'bootRun'
+apply plugin: 'net.researchgate.release'
 
 group = 'com.rfb'
 version = '0.0.1-SNAPSHOT'
