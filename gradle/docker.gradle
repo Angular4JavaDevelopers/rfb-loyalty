@@ -44,7 +44,7 @@ task buildDocker(type: DockerBuildImage, dependsOn: 'copyDockerFiles') {
     description = "Package application as Docker image"
     group = "Docker"
     inputDir = project.file("${project.buildDir}/docker")
-    tags = ["${rfbImageName}:latest".toString(), "${rfbImageName}:${version}".toString()]
+    tags = ["${rfbImageName}:latest".toString(), "${rfbImageName}:${properties.version}".toString()]
 }
 
 /**
@@ -62,5 +62,5 @@ task pushDockerLatest(type: DockerPushImage, dependsOn: 'buildDocker') {
  */
 task pushDockerVersionTag(type: DockerPushImage, dependsOn: 'buildDocker') {
     imageName = rfbImageName
-    tag =  "${version}".toString()
+    tag =  "${properties.version}".toString()
 }
