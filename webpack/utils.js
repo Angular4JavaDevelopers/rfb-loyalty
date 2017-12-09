@@ -10,8 +10,8 @@ module.exports = {
 // Returns the second occurrence of the version number from `build.gradle` file
 function parseVersion() {
     const versionRegex = /^version\s*=\s*[',"]([^',"]*)[',"]/gm; // Match and group the version number
-    const buildGradle = fs.readFileSync('build.gradle', 'utf8');
-    return versionRegex.exec(buildGradle)[1];
+    const buildGradle = fs.readFileSync('gradle.properties', 'utf8');
+    return versionRegex.exec(buildGradle)[0];
 }
 
 const _root = path.resolve(__dirname, '..');
